@@ -24,9 +24,10 @@ public class App {
             }
         }
 
+        String str;
         while (true) {
             System.out.print("사칙 연산 기호(+, -, x, /)를 입력하세요: ");
-            String str = scanner.next();
+            str = scanner.next();
 
             if (str.equals("+") || str.equals("-") || str.equals("x") || str.equals("/")) {
                 break;
@@ -50,6 +51,29 @@ public class App {
                 scanner.next();
             }
         }
+
+        while (true) {
+            if (str.equals("+")) {
+                int sum = i1 + i2;
+                System.out.println("값은: " + sum + "입니다.");
+            } else {
+                if (str.equals("-")) {
+                    int sub = i1 - i2;
+                    System.out.println("값은: " + sub + "입니다.");
+                } else {
+                    if (str.equals("x")) {
+                        int mul = i1 * i2;
+                        System.out.println("값은: " + mul + "입니다.");
+                    } else {
+                        if (str.equals("/")) {
+                            double div = (double) i1 / i2;
+                            System.out.println("값은: " + div + "입니다.");
+                        }
+                    }
+                }
+            } break;
+        }
+
 
     }
 }
