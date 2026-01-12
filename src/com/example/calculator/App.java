@@ -4,19 +4,22 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        Calculator calculator = new Calculator(); // Calculator 인스턴스 생성
+
         Scanner scanner = new Scanner(System.in);
-        double result = 0;
-        boolean hasResult = false;
+
+        boolean isFirstCalculation = true; // 첫 계산인지 확인
 
         while (true) {
-            double i1;
-            if (!hasResult) {
+
+            int num1 = 0; // num1 초기화
+
+            if (isFirstCalculation) {
                 while (true) {
                     System.out.print("첫 번째 숫자를 입력하세요: ");
-
                     if (scanner.hasNextInt()) {
-                        i1 = scanner.nextInt();
-                        if (i1 >= 0) {
+                        num1 = scanner.nextInt();
+                        if (num1 >= 0) {
                             break;
                         } else {
                             System.out.println("0 이상의 정수를 입력하세요!");
@@ -26,9 +29,6 @@ public class App {
                         scanner.next();
                     }
                 }
-            } else {
-                i1 = result;
-                System.out.println("현재값: " + i1);
             }
 
             String str;
@@ -43,12 +43,13 @@ public class App {
                 }
             }
 
-            int i2;
+            int num2;
             while (true) {
                 System.out.print("두 번째 숫자를 입력하세요: ");
+
                 if (scanner.hasNextInt()) {
-                    i2 = scanner.nextInt();
-                    if (i2 >= 0) {
+                    num2 = scanner.nextInt();
+                    if (num2 >= 0) {
                         break;
                     } else {
                         System.out.println("0 이상의 정수를 입력하세요!");
@@ -59,26 +60,22 @@ public class App {
                 }
             }
 
-            if (str.equals("+")) result = i1 + i2;
-            else if (str.equals("-")) result = i1 - i2;
-            else if (str.equals("x")) result = i1 * i2;
-            else {
-                if (i2 == 0) {
-                    System.out.println("0으로 나눌 수 없습니다.");
-                    continue;
-                }
-                result = i1 / i2;
+            double result; // 계산은 Calculator가 수행
+
+            if (isFirstCalculation) { // 첫 계산이면 num1 사용, 아니면 누적 계산
+                result = calculator.calculate(str, num1, num2);
+                isFirstCalculation = false; // 이후부터는 누적 계산
+            } else {
+                result = calculator.calculate(str, num2);
             }
 
-            hasResult = true;
             System.out.println("값은 " + result + "입니다.");
             System.out.println("더 계산하시겠습니까? 아무 키 + Enter 입력 시 계속 됩니다. (exit 입력 시 종료)");
             String quit = scanner.next();
+            System.out.println("현재 값: " + result);
             if (quit.equals("exit")) {
                 System.out.println("계산기를 종료합니다.");
                 break;
-            } else {
-                continue;
             }
         }
     }
