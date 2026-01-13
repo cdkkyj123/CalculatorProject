@@ -78,5 +78,6 @@ public class App {
                 break;
             }
         }
+        System.out.println("누적된 결과 조회: " + calculator.getResults());
     }
 }
