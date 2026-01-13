@@ -85,4 +85,13 @@ public class Calculator {
     public void setResults(ArrayList<Double> results) {
         this.results = results;
     }
+
+    // 가장 먼저 저장된 데이터를 삭제하는 기능
+    public Double removeResult() {
+        // 결과 상자가 비어있는 예외 처리
+        if (results.isEmpty()) {
+            throw new IllegalArgumentException("결과가 비어있습니다.");
+        }
+        return results.remove(0);
+    }
 }
