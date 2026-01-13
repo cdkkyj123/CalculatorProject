@@ -79,5 +79,21 @@ public class App {
             }
         }
         System.out.println("누적된 결과 조회: " + calculator.getResults());
+
+        // 가장 먼저 저장된 데이터를 삭제하는 기능
+        System.out.println("가장 먼저 저장된 결과를 삭제하시겠습니까? (y: 삭제, any key: 취소)");
+        String confirm = scanner.next();
+
+        if (confirm.equals("y")) {
+            try {
+                double removed = calculator.removeResult();
+                System.out.println("가장 먼저 저장된 결과 " + removed + "를 삭제했습니다.");
+                System.out.println("현재 남은 결과는 " + calculator.getResults() + " 입니다.");
+            } catch (IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("삭제를 취소했습니다.");
+        }
     }
 }
