@@ -2,23 +2,34 @@ package com.example.calculator;
 
 import java.util.ArrayList;
 
-public class ArithmeticCalculator {
+public class ArithmeticCalculator<T extends Number> {
+
+    private T result;
+    public ArithmeticCalculator() {
+    }
+
+    public T getResult() {
+        return this.result;
+    }
 
     private double currentResult = 0; // 누적 결과
     private boolean hasResult = false; // App에 있던 '첫 계산인지 확인'을 Calculator에서 하기
     private ArrayList<Double> results = new ArrayList<>();
 
     // OperatorType에게 계산 맡기기
-    public double calculate(OperatorType operator, int a, int b) {
-        double result = operator.apply(a, b); // 나눗셈의 결과가 '실수'일 수 있기에 double로 표현
+    public double calculate(OperatorType operator, T a, T b) {
+        double x = a.doubleValue();
+        double y = b.doubleValue();
+        double result = operator.apply(x, y); // 나눗셈의 결과가 '실수'일 수 있기에 double로 표현
         save(result);
         return result; // 결과 값 반환
     }
-    public double calculate(OperatorType operator, int b) {
+    public double calculate(OperatorType operator, T b) {
         if (!hasResult) {
             throw new IllegalArgumentException("첫 계산이 아직 없습니다.");
         }
-        double result = operator.apply(currentResult, b);
+        double y = b.doubleValue();
+        double result = operator.apply(currentResult, y);
         save(result);
         return result;
 

@@ -4,22 +4,22 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        ArithmeticCalculator calculator = new ArithmeticCalculator(); // Calculator 인스턴스 생성
+        ArithmeticCalculator<Number> calculator = new ArithmeticCalculator<>(); // Calculator 인스턴스 생성
 
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
 
             OperatorType operator;
-            int num1 = 0;
-            int num2;
+            double num1 = 0;
+            double num2;
 
             if (!calculator.hasResult()) {
-                num1 = confirmInt(scanner, "첫 번째 숫자를 입력하세요: ");
+                num1 = confirmNumber(scanner, "첫 번째 숫자를 입력하세요: ");
             }
 
-            operator = readoperator(scanner);
-            num2 = confirmInt(scanner, "두 번째 숫자를 입력하세요: ");
+            operator = readOperator(scanner);
+            num2 = confirmNumber(scanner, "두 번째 숫자를 입력하세요: ");
 
             double result;
 
@@ -58,20 +58,19 @@ public class App {
         }
     }
 
-    private static int confirmInt(Scanner scanner, String str) {
+    private static double confirmNumber(Scanner scanner, String str) {
         while (true) {
             System.out.print(str);
-            if (scanner.hasNextInt()) {
-                int num = scanner.nextInt();
-                if (num >= 0) return num;
+            if (scanner.hasNextDouble()) {
+                return scanner.nextDouble();
             } else {
                 scanner.next();
+                System.out.println("숫자를 입력하세요(정수 or 실수)!");
             }
-            System.out.println("0 이상의 정수를 입력하세요!");
         }
     }
 
-    private static OperatorType readoperator(Scanner scanner) {
+    private static OperatorType readOperator(Scanner scanner) {
         while (true) {
             System.out.print("사칙 연산 기호(+, -, x, /)를 입력하세요: ");
             String input = scanner.next();
