@@ -8,65 +8,25 @@ public class App {
 
         Scanner scanner = new Scanner(System.in);
 
-        boolean isFirstCalculation = true; // 첫 계산인지 확인
-
         while (true) {
 
-            int num1 = 0; // num1 초기화
-
-            if (isFirstCalculation) {
-                while (true) {
-                    System.out.print("첫 번째 숫자를 입력하세요: ");
-                    if (scanner.hasNextInt()) {
-                        num1 = scanner.nextInt();
-                        if (num1 >= 0) {
-                            break;
-                        } else {
-                            System.out.println("0 이상의 정수를 입력하세요!");
-                        }
-                    } else {
-                        System.out.println("0 이상의 정수를 입력하세요!");
-                        scanner.next();
-                    }
-                }
-            }
-
-            String str;
-            while (true) {
-                System.out.print("사칙 연산 기호(+, -, x, /)를 입력하세요: ");
-                str = scanner.next();
-
-                if (str.equals("+") || str.equals("-") || str.equals("x") || str.equals("/")) {
-                    break;
-                } else {
-                    System.out.println("유효하지 않은 기호입니다! (+, -, x, /) 중 하나를 입력하세요!");
-                }
-            }
-
+            OperatorType operator;
+            int num1 = 0;
             int num2;
-            while (true) {
-                System.out.print("두 번째 숫자를 입력하세요: ");
 
-                if (scanner.hasNextInt()) {
-                    num2 = scanner.nextInt();
-                    if (num2 >= 0) {
-                        break;
-                    } else {
-                        System.out.println("0 이상의 정수를 입력하세요!");
-                    }
-                } else {
-                    System.out.println("0 이상의 정수를 입력하세요!");
-                    scanner.next();
-                }
+            if (!calculator.hasResult()) {
+                num1 = confirmInt(scanner, "첫 번째 숫자를 입력하세요: ");
             }
 
-            double result; // 계산은 Calculator가 수행
+            operator = readoperator(scanner);
+            num2 = confirmInt(scanner, "두 번째 숫자를 입력하세요: ");
 
-            if (isFirstCalculation) { // 첫 계산이면 num1 사용, 아니면 누적 계산
-                result = calculator.calculate(OperatorType.fromSymbol(str), num1, num2);
-                isFirstCalculation = false; // 이후부터는 누적 계산
+            double result;
+
+            if (!calculator.hasResult()) {
+                result = calculator.calculate(operator, num1, num2);
             } else {
-                result = calculator.calculate(OperatorType.fromSymbol(str), num2);
+                result = calculator.calculate(operator, num2);
             }
 
             System.out.println("값은 " + result + "입니다.");
@@ -78,6 +38,7 @@ public class App {
                 break;
             }
         }
+
         System.out.println("누적된 결과 조회: " + calculator.getResults());
 
         // 가장 먼저 저장된 데이터를 삭제하는 기능
@@ -94,6 +55,31 @@ public class App {
             }
         } else {
             System.out.println("삭제를 취소했습니다.");
+        }
+    }
+
+    private static int confirmInt(Scanner scanner, String str) {
+        while (true) {
+            System.out.print(str);
+            if (scanner.hasNextInt()) {
+                int num = scanner.nextInt();
+                if (num >= 0) return num;
+            } else {
+                scanner.next();
+            }
+            System.out.println("0 이상의 정수를 입력하세요!");
+        }
+    }
+
+    private static OperatorType readoperator(Scanner scanner) {
+        while (true) {
+            System.out.print("사칙 연산 기호(+, -, x, /)를 입력하세요: ");
+            String input = scanner.next();
+            try {
+                return OperatorType.fromSymbol(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("유효하지 않은 기호입니다! (+, -, x, /) 중 하나를 입력하세요!");
+            }
         }
     }
 }
