@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        Calculator calculator = new Calculator(); // Calculator 인스턴스 생성
+        ArithmeticCalculator calculator = new ArithmeticCalculator(); // Calculator 인스턴스 생성
 
         Scanner scanner = new Scanner(System.in);
 
@@ -63,10 +63,10 @@ public class App {
             double result; // 계산은 Calculator가 수행
 
             if (isFirstCalculation) { // 첫 계산이면 num1 사용, 아니면 누적 계산
-                result = calculator.calculate(str, num1, num2);
+                result = calculator.calculate(OperatorType.fromSymbol(str), num1, num2);
                 isFirstCalculation = false; // 이후부터는 누적 계산
             } else {
-                result = calculator.calculate(str, num2);
+                result = calculator.calculate(OperatorType.fromSymbol(str), num2);
             }
 
             System.out.println("값은 " + result + "입니다.");
