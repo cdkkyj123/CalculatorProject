@@ -76,8 +76,13 @@ public class Calculator {
 
         }
 
-    // 결과 조회
+    // Getter 결과 조회
     public ArrayList<Double> getResults() {
         return new ArrayList<>(results);
+    }
+
+    // Setter
+    public void setResults(ArrayList<Double> results) {
+        this.results = results;
     }
 }
