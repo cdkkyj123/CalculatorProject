@@ -70,6 +70,7 @@ public class App {
                     System.out.println(e.getMessage());
                 }
             } else {
+                scanner.nextLine();
                 System.out.println("출력을 종료합니다.");
                 break;
             }
@@ -86,7 +87,7 @@ public class App {
             }
                 try {
                     double removed = calculator.removeResult();
-                    System.out.println("가장 먼저 저장된 결과 " + removed + "를 삭제했습니다.");
+                    System.out.println("가장 먼저 저장된 결과 [" + removed + "]를 삭제했습니다.");
                     System.out.println("현재 남은 결과는 " + calculator.getResults() + " 입니다.");
                 } catch (IllegalStateException e) {
                     System.out.println(e.getMessage());
