@@ -1,6 +1,8 @@
 package com.example.calculator;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ArithmeticCalculator<T extends Number> {
 
@@ -62,5 +64,10 @@ public class ArithmeticCalculator<T extends Number> {
             throw new IllegalArgumentException("결과가 비어있습니다.");
         }
         return results.remove(0);
+    }
+
+    // 누적된 결과 중 입력 값보다 큰 값을 반환하는 기능 (스트림 사용)
+    ArrayList<Double> getBiggerResults(double num3) {
+        return results.stream().filter(result -> result > num3).collect(Collectors.toCollection(ArrayList::new));
     }
 }

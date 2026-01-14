@@ -1,5 +1,6 @@
 package com.example.calculator;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -39,23 +40,60 @@ public class App {
             }
         }
 
-        System.out.println("누적된 결과 조회: " + calculator.getResults());
+        // 누적된 결과를 조회하는 기능
+        while (true) {
+            System.out.println("누적된 결과를 조회하시겠습니까? (y: 삭제, any key: 취소)");
+            String checkResult = scanner.next();
+
+            if (checkResult.equals("y")) {
+                try {
+                    System.out.println("누적된 결과 조회: " + calculator.getResults());
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                System.out.println("조회를 취소합니다.");
+                break;
+            }
+        }
+
+        // 누적된 결과 중 입력 값보다 큰 값을 반환 받는 기능
+        while (true) {
+            System.out.println("숫자를 입력하시면 누적된 결과 중 해당 숫자보다 큰 값을 출력하겠습니다.");
+            if (scanner.hasNextDouble()) {
+                double num3 = scanner.nextDouble();
+                scanner.nextLine();
+                try {
+                    List<Double> filteredResults = calculator.getBiggerResults(num3);
+                    System.out.println("결과: " + filteredResults);
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                System.out.println("출력을 종료합니다.");
+                break;
+            }
+        }
 
         // 가장 먼저 저장된 데이터를 삭제하는 기능
-        System.out.println("가장 먼저 저장된 결과를 삭제하시겠습니까? (y: 삭제, any key: 취소)");
-        String confirm = scanner.next();
+        while (true) {
+            System.out.println("가장 먼저 저장된 결과를 삭제하시겠습니까? (y: 삭제, any key: 취소)");
+            String confirmDelete = scanner.next();
 
-        if (confirm.equals("y")) {
-            try {
-                double removed = calculator.removeResult();
-                System.out.println("가장 먼저 저장된 결과 " + removed + "를 삭제했습니다.");
-                System.out.println("현재 남은 결과는 " + calculator.getResults() + " 입니다.");
-            } catch (IllegalStateException e) {
-                System.out.println(e.getMessage());
+            if (!confirmDelete.equals("y")) {
+                System.out.println("삭제를 종료합니다.");
+                break;
             }
-        } else {
-            System.out.println("삭제를 취소했습니다.");
-        }
+                try {
+                    double removed = calculator.removeResult();
+                    System.out.println("가장 먼저 저장된 결과 " + removed + "를 삭제했습니다.");
+                    System.out.println("현재 남은 결과는 " + calculator.getResults() + " 입니다.");
+                } catch (IllegalStateException e) {
+                    System.out.println(e.getMessage());
+                    break;
+                }
+            }
+
     }
 
     private static double confirmNumber(Scanner scanner, String str) {
